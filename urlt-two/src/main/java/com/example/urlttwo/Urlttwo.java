@@ -41,7 +41,7 @@ public class Urlttwo {
         String protocal = "HTTPS";
         String domain = "app.pendo.io";
         String path = "/data/track";
-        String sharedsecret = "no2";
+        String sharedsecret = "69571379f12304d798affa1cba82f2453d71c14e346aad143cbd4ee850724bd120a24665b426d6f41bfe95a7e203daf5";
 
         URL pendoUrl = new URL(protocal + "://" + domain + path);
 
@@ -52,6 +52,7 @@ public class Urlttwo {
         parameters.put("event", "test event");
         parameters.put("visitorId", "3294828429");
         parameters.put("type", "track");
+        parameters.put("accountId", "testaccount-demo"); // make sure -demo is always on this so the data is excluded
 
         con.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(con.getOutputStream());
