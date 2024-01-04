@@ -2,9 +2,13 @@ package com.example.urlttwo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.BufferedReader;
@@ -43,41 +47,57 @@ public class Urlttwo {
         String path = "/data/track";
         String sharedsecret = "69571379f12304d798affa1cba82f2453d71c14e346aad143cbd4ee850724bd120a24665b426d6f41bfe95a7e203daf5";
 
-        URL pendoUrl = new URL(protocal + "://" + domain + path);
+        String url = "https://postman-rest-api-learner.glitch.me/info";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, String> map = new HashMap<>();
+        map.put("name","Jon");
 
-        HttpURLConnection con = (HttpURLConnection) pendoUrl.openConnection();
-        con.setRequestMethod("POST");
+        HttpEntity<String> request =
+                new HttpEntity<String>(map.toString(), headers);
 
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("event", "test event");
-        parameters.put("visitorId", "3294828429");
-        parameters.put("type", "track");
-        parameters.put("accountId", "testaccount-demo"); // make sure -demo is always on this so the data is excluded
+        String resp = restTemplate.postForObject(url, request, String.class);
+        System.out.println(resp);
 
-        con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-        out.writeBytes(getParamsString(parameters));
-        out.flush();
-        out.close();
 
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("x-pendo-integration-key", sharedsecret);
 
-        con.setConnectTimeout(5000);
-        con.setReadTimeout(5000);
 
-        int status = con.getResponseCode();
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        in.close();
-
-        con.disconnect();
+//        URL pendoUrl = new URL(protocal + "://" + domain + path);
+//
+//        HttpURLConnection con = (HttpURLConnection) pendoUrl.openConnection();
+//        con.setRequestMethod("POST");
+//
+//        Map<String, String> parameters = new HashMap<>();
+//        parameters.put("event", "test event");
+//        parameters.put("visitorId", "3294828429");
+//        parameters.put("type", "track");
+//        parameters.put("accountId", "testaccount-demo"); // make sure -demo is always on this so the data is excluded
+//
+//        con.setDoOutput(true);
+//        DataOutputStream out = (DataOutputStream) con.getOutputStream();
+//        out.writeBytes(getParamsString(parameters));
+//        out.flush();
+//        out.close();
+//
+//        con.setRequestProperty("Content-Type", "application/json");
+//        con.setRequestProperty("x-pendo-integration-key", sharedsecret);
+//
+//        con.setConnectTimeout(5000);
+//        con.setReadTimeout(5000);
+//
+//        int status = con.getResponseCode();
+//
+//        BufferedReader in = new BufferedReader(
+//                new InputStreamReader(con.getInputStream()));
+//        String inputLine;
+//        StringBuffer content = new StringBuffer();
+//        while ((inputLine = in.readLine()) != null) {
+//            content.append(inputLine);
+//        }
+//        in.close();
+//
+//        con.disconnect();
 
 
 
