@@ -28,7 +28,7 @@ public class Urlttwo {
         String protocal = "HTTPS";
         String domain = "app.pendo.io";
         String path = "/data/track";
-        String sharedsecret = "no";
+        String sharedsecret = "no2";
 
 
         // redirct the user to benefitsolver
